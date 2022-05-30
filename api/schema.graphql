@@ -1,0 +1,631 @@
+"""A book."""
+type Book implements Node {
+  id: ID!
+
+  """The id of this book."""
+  _id: Int!
+
+  """The ISBN of this book (or null if doesn't have one)."""
+  isbn: String
+
+  """The title of this book."""
+  title: String!
+
+  """The description of this book."""
+  description: String!
+
+  """The author of this book."""
+  author: String!
+
+  """The publication date of this book."""
+  publicationDate: String!
+
+  """Available reviews for this book."""
+  reviews(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ReviewConnection
+}
+
+"""Connection for Book."""
+type BookConnection {
+  edges: [BookEdge]
+  pageInfo: BookPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Book."""
+type BookEdge {
+  node: Book
+  cursor: String!
+}
+
+"""Information about the current page."""
+type BookPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+"""An engineer."""
+type Engineer implements Node {
+  id: ID!
+  _id: Int!
+  name: String!
+  department: String!
+  projects(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ProjectConnection
+}
+
+"""Connection for Engineer."""
+type EngineerConnection {
+  edges: [EngineerEdge]
+  pageInfo: EngineerPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Engineer."""
+type EngineerEdge {
+  node: Engineer
+  cursor: String!
+}
+
+"""Information about the current page."""
+type EngineerPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+"""This is a dummy entity. Remove it!"""
+type Greeting implements Node {
+  id: ID!
+
+  """The entity ID"""
+  _id: Int!
+
+  """A nice person"""
+  name: String!
+}
+
+"""Connection for Greeting."""
+type GreetingConnection {
+  edges: [GreetingEdge]
+  pageInfo: GreetingPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Greeting."""
+type GreetingEdge {
+  node: Greeting
+  cursor: String!
+}
+
+"""Information about the current page."""
+type GreetingPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Mutation {
+  """Deletes a Book."""
+  deleteBook(input: deleteBookInput!): deleteBookPayload
+
+  """Updates a Book."""
+  updateBook(input: updateBookInput!): updateBookPayload
+
+  """Creates a Book."""
+  createBook(input: createBookInput!): createBookPayload
+
+  """Deletes a Engineer."""
+  deleteEngineer(input: deleteEngineerInput!): deleteEngineerPayload
+
+  """Updates a Engineer."""
+  updateEngineer(input: updateEngineerInput!): updateEngineerPayload
+
+  """Creates a Engineer."""
+  createEngineer(input: createEngineerInput!): createEngineerPayload
+
+  """Deletes a Greeting."""
+  deleteGreeting(input: deleteGreetingInput!): deleteGreetingPayload
+
+  """Updates a Greeting."""
+  updateGreeting(input: updateGreetingInput!): updateGreetingPayload
+
+  """Creates a Greeting."""
+  createGreeting(input: createGreetingInput!): createGreetingPayload
+
+  """Deletes a Project."""
+  deleteProject(input: deleteProjectInput!): deleteProjectPayload
+
+  """Updates a Project."""
+  updateProject(input: updateProjectInput!): updateProjectPayload
+
+  """Creates a Project."""
+  createProject(input: createProjectInput!): createProjectPayload
+
+  """Deletes a Review."""
+  deleteReview(input: deleteReviewInput!): deleteReviewPayload
+
+  """Updates a Review."""
+  updateReview(input: updateReviewInput!): updateReviewPayload
+
+  """Creates a Review."""
+  createReview(input: createReviewInput!): createReviewPayload
+}
+
+"""A node, according to the Relay specification."""
+interface Node {
+  """The id of this node."""
+  id: ID!
+}
+
+type Project implements Node {
+  id: ID!
+  _id: Int!
+  content: String!
+  leader: String!
+  startDate: String!
+  engineer: Engineer
+}
+
+"""Connection for Project."""
+type ProjectConnection {
+  edges: [ProjectEdge]
+  pageInfo: ProjectPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Project."""
+type ProjectEdge {
+  node: Project
+  cursor: String!
+}
+
+"""Information about the current page."""
+type ProjectPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Query {
+  node(id: ID!): Node
+  book(id: ID!): Book
+  books(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): BookConnection
+  engineer(id: ID!): Engineer
+  engineers(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): EngineerConnection
+  greeting(id: ID!): Greeting
+  greetings(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): GreetingConnection
+  project(id: ID!): Project
+  projects(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ProjectConnection
+  review(id: ID!): Review
+  reviews(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ReviewConnection
+}
+
+"""A review of a book."""
+type Review implements Node {
+  id: ID!
+
+  """The id of this review."""
+  _id: Int!
+
+  """The rating of this review (between 0 and 5)."""
+  rating: Int!
+
+  """The body of the review."""
+  body: String!
+
+  """The author of the review."""
+  author: String!
+
+  """The date of publication of this review."""
+  publicationDate: String!
+
+  """The book this review is about."""
+  book: Book
+}
+
+"""Connection for Review."""
+type ReviewConnection {
+  edges: [ReviewEdge]
+  pageInfo: ReviewPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Review."""
+type ReviewEdge {
+  node: Review
+  cursor: String!
+}
+
+"""Information about the current page."""
+type ReviewPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Subscription {
+  """Subscribes to the update event of a Greeting."""
+  updateGreetingSubscribe(input: updateGreetingSubscriptionInput!): updateGreetingSubscriptionPayload
+}
+
+"""A book."""
+input createBookInput {
+  """The ISBN of this book (or null if doesn't have one)."""
+  isbn: String
+
+  """The title of this book."""
+  title: String!
+
+  """The description of this book."""
+  description: String!
+
+  """The author of this book."""
+  author: String!
+
+  """The publication date of this book."""
+  publicationDate: String!
+
+  """Available reviews for this book."""
+  reviews: [String]
+  clientMutationId: String
+}
+
+"""A book."""
+type createBookPayload {
+  book: Book
+  clientMutationId: String
+}
+
+"""An engineer."""
+input createEngineerInput {
+  name: String!
+  department: String!
+  projects: [String]
+  clientMutationId: String
+}
+
+"""An engineer."""
+type createEngineerPayload {
+  engineer: Engineer
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+input createGreetingInput {
+  """A nice person"""
+  name: String!
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+type createGreetingPayload {
+  greeting: Greeting
+  clientMutationId: String
+}
+
+input createProjectInput {
+  content: String!
+  leader: String!
+  startDate: String!
+  engineer: String
+  clientMutationId: String
+}
+
+type createProjectPayload {
+  project: Project
+  clientMutationId: String
+}
+
+"""A review of a book."""
+input createReviewInput {
+  """The rating of this review (between 0 and 5)."""
+  rating: Int!
+
+  """The body of the review."""
+  body: String!
+
+  """The author of the review."""
+  author: String!
+
+  """The date of publication of this review."""
+  publicationDate: String!
+
+  """The book this review is about."""
+  book: String
+  clientMutationId: String
+}
+
+"""A review of a book."""
+type createReviewPayload {
+  review: Review
+  clientMutationId: String
+}
+
+"""A book."""
+input deleteBookInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""A book."""
+type deleteBookPayload {
+  book: Book
+  clientMutationId: String
+}
+
+"""An engineer."""
+input deleteEngineerInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""An engineer."""
+type deleteEngineerPayload {
+  engineer: Engineer
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+input deleteGreetingInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+type deleteGreetingPayload {
+  greeting: Greeting
+  clientMutationId: String
+}
+
+input deleteProjectInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type deleteProjectPayload {
+  project: Project
+  clientMutationId: String
+}
+
+"""A review of a book."""
+input deleteReviewInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"""A review of a book."""
+type deleteReviewPayload {
+  review: Review
+  clientMutationId: String
+}
+
+"""A book."""
+input updateBookInput {
+  id: ID!
+
+  """The ISBN of this book (or null if doesn't have one)."""
+  isbn: String
+
+  """The title of this book."""
+  title: String
+
+  """The description of this book."""
+  description: String
+
+  """The author of this book."""
+  author: String
+
+  """The publication date of this book."""
+  publicationDate: String
+
+  """Available reviews for this book."""
+  reviews: [String]
+  clientMutationId: String
+}
+
+"""A book."""
+type updateBookPayload {
+  book: Book
+  clientMutationId: String
+}
+
+"""An engineer."""
+input updateEngineerInput {
+  id: ID!
+  name: String
+  department: String
+  projects: [String]
+  clientMutationId: String
+}
+
+"""An engineer."""
+type updateEngineerPayload {
+  engineer: Engineer
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+input updateGreetingInput {
+  id: ID!
+
+  """A nice person"""
+  name: String
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+type updateGreetingPayload {
+  greeting: Greeting
+  clientMutationId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+input updateGreetingSubscriptionInput {
+  id: ID!
+  clientSubscriptionId: String
+}
+
+"""This is a dummy entity. Remove it!"""
+type updateGreetingSubscriptionPayload {
+  greeting: Greeting
+  clientSubscriptionId: String
+  mercureUrl: String
+}
+
+input updateProjectInput {
+  id: ID!
+  content: String
+  leader: String
+  startDate: String
+  engineer: String
+  clientMutationId: String
+}
+
+type updateProjectPayload {
+  project: Project
+  clientMutationId: String
+}
+
+"""A review of a book."""
+input updateReviewInput {
+  id: ID!
+
+  """The rating of this review (between 0 and 5)."""
+  rating: Int
+
+  """The body of the review."""
+  body: String
+
+  """The author of the review."""
+  author: String
+
+  """The date of publication of this review."""
+  publicationDate: String
+
+  """The book this review is about."""
+  book: String
+  clientMutationId: String
+}
+
+"""A review of a book."""
+type updateReviewPayload {
+  review: Review
+  clientMutationId: String
+}
