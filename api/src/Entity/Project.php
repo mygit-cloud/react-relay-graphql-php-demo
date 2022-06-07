@@ -4,6 +4,7 @@
  namespace App\Entity;
  
  use ApiPlatform\Core\Annotation\ApiResource;
+  use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\ORM\Mapping as ORM;
  
  #[ORM\Entity]
@@ -23,9 +24,14 @@
      #[ORM\Column]
      public ?\DateTimeImmutable $startDate = null;
  
-     #[ORM\ManyToOne(inversedBy: 'projects')]
-     public ?Engineer $engineer = null;
+    #[ORM\ManyToMany(targetEntity: Engineer::class, mappedBy:'projects')]
+     public iterable $engineers;
  
+     public function __construct()
+    {
+        $this->engineers = new ArrayCollection();
+    }
+
      public function getId(): ?int
     {
         return $this->id;

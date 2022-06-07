@@ -12,6 +12,8 @@ namespace App\Entity;
  #[ApiResource]
  class Engineer
  {
+
+
      #[ORM\Id, ORM\Column, ORM\GeneratedValue]
      private ?int $id = null;
 
@@ -21,8 +23,9 @@ namespace App\Entity;
      #[ORM\Column]
      public string $department = '';
 
-     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'engineer', cascade: ['persist', 'remove'])]
-     public iterable $projects;    
+    #[ORM\ManyToMany(targetEntity: Project::class, inversedBy:'engineers')]
+    #[ORM\JoinTable(name:'engineers_projects')]
+    public iterable $projects;    
 
     public function __construct()
     {
